@@ -4,18 +4,12 @@ import java.util.ArrayList;
 
 /**
  * Trieda Hra spája jednotlivé triedy a vytvára logiku na hranie.
- * 
+ *
  * @author Matúš Piroh
  * @version 5.1.2026
  */
 public class Hra {
-    // vytvorenie prvého levelu
-    private static final Level LEVEL1 = new Level("Level1", 90, 1, 260, 410, Smer.DOLE_VPRAVO, 4, 6);
-    // vytvorenie druhého levelu
-    private static final Level LEVEL2 = new Level("Level2", 60, 2, 180, 380, Smer.DOLE_VPRAVO, 5, 6);
-    // vytvorenie tretieho levelu
-    private static final Level LEVEL3 = new Level("Level3", 40, 3, 300, 410, Smer.HORE_VPRAVO, 6, 6);
-    
+
     private Odrazadlo odrazadlo;
     private Manazer manazer;
     private Oramovanie oramovanie;
@@ -29,13 +23,13 @@ public class Hra {
     private ArrayList<Tlacidlo> tlacidla;
     private BlokTextu text;
     private int lenRaz;
-    
+
     /**
-     * Koštruktor na začiatku zapne prvý level, vytvorí orámovanie, tlačidlá a zavolá metódu, 
+     * Koštruktor na začiatku zapne prvý level, vytvorí orámovanie, tlačidlá a zavolá metódu,
      * ktorá vytvorí hráčsku plochu a dá manažérovi spravovať daný objekt.
      */
     public Hra() {
-        this.level = LEVEL1;
+        this.level = Level.LEVEL1;
         this.oramovanie = new Oramovanie();
         this.tlacidla = new ArrayList<Tlacidlo>();
         this.tlacidla.add(new Tlacidlo("Level1", 50, 50, 71, 30));
@@ -47,10 +41,10 @@ public class Hra {
         this.lenRaz = 0;
         this.manazer.spravujObjekt(this);
     }
-    
+
     /**
      * Metóda zisťuje, nastavuje a vráti hodnotu smeru guličky.
-     * Popisuje čo má robiť ak sa gulička odrazí od odrážadla, orámovania 
+     * Popisuje čo má robiť ak sa gulička odrazí od odrážadla, orámovania
      * alebo ak sa chytí spodnej časti orámovania(hra skončí).
      */
     public Smer getSmerOkolie() {
@@ -58,13 +52,13 @@ public class Hra {
         if (this.gulicka.getX() > this.odrazadlo.getX() - this.gulicka.getPriemer()
             && this.gulicka.getX() < this.odrazadlo.getX() + this.odrazadlo.getSirka()
             && this.gulicka.getY() == this.odrazadlo.getY() - this.gulicka.getPriemer()) {
-            if (this.sipka == Sipky.VPRAVO) { 
+            if (this.sipka == Sipky.VPRAVO) {
                 this.smer = Smer.HORE_VPRAVO;
                 this.sipka = Sipky.ZIADNA;
             } else if (this.sipka == Sipky.VLAVO) {
                 this.smer = Smer.HORE_VLAVO;
                 this.sipka = Sipky.ZIADNA;
-            } else {   
+            } else {
                 if (this.smer == Smer.DOLE_VPRAVO) {
                     this.smer = Smer.HORE_VPRAVO;
                 } else {
@@ -90,7 +84,7 @@ public class Hra {
             if (this.smer == Smer.HORE_VPRAVO) {
                 this.smer = Smer.DOLE_VPRAVO;
             } else {
-                this.smer = Smer.DOLE_VLAVO;  
+                this.smer = Smer.DOLE_VLAVO;
             }
         }
 
@@ -112,8 +106,8 @@ public class Hra {
             }
         }
 
-        // Po skontrolovaní všetkých podmienok vráti smer. 
-        return this.smer;    
+        // Po skontrolovaní všetkých podmienok vráti smer.
+        return this.smer;
     }
 
     /**
@@ -125,8 +119,8 @@ public class Hra {
             for (int stlpec = 0; stlpec < this.prekazky.getPocetStlpcov(); stlpec++) {
                 if (this.prekazky.getBlok(riadok, stlpec).jeZobrazeny()) {
                     // ak gulička narazí zhora
-                    if (this.gulicka.getY() == (30 + (35 * riadok)) 
-                        && this.gulicka.getX() >= 122 + (55 * (stlpec + 1)) + this.prekazky.getBlok(riadok, stlpec).getSirka()
+                    if (this.gulicka.getY() == (30 + (35 * riadok))
+                        && this.gulicka.getX() >= (122 + (55 * (stlpec + 1)) + this.prekazky.getBlok(riadok, stlpec).getSirka())
                         && this.gulicka.getX() <= (122 + (55 * (stlpec + 1))) + (2 * this.prekazky.getBlok(riadok, stlpec).getSirka())) {
                         if (this.smer == Smer.DOLE_VPRAVO) {
                             this.smer = Smer.HORE_VPRAVO;
@@ -147,7 +141,7 @@ public class Hra {
                             this.skrytiePrekazok(riadok, stlpec);
                         }
                     // ak gulička narazí sprava
-                    } else if (this.gulicka.getX() == (122 + (55 * (stlpec + 1))) + (2 * this.prekazky.getBlok(riadok, stlpec).getSirka()) 
+                    } else if (this.gulicka.getX() == (122 + (55 * (stlpec + 1))) + (2 * this.prekazky.getBlok(riadok, stlpec).getSirka())
                         && this.gulicka.getY() >= (30 + (35 * riadok)) + this.prekazky.getBlok(riadok, stlpec).getVyska()
                         && this.gulicka.getY() <= (30 + (35 * riadok)) + (2 * this.prekazky.getBlok(riadok, stlpec).getVyska())) {
                         if (this.smer == Smer.HORE_VLAVO) {
@@ -182,10 +176,10 @@ public class Hra {
 
         return this.smer;
     }
-    
+
     /**
      * Metóda vyhondotí výhru hráča,
-     * zavolá metódu getSmerOkolie a metódu getDotknutaOsoba, 
+     * zavolá metódu getSmerOkolie a metódu getDotknutaOsoba,
      * aby zistila smer, do ktorého sa má posúvať guličku.
      * Na začiatku je využitý cyklus for pre zrýchlenie pohybu guličky.
      */
@@ -200,11 +194,11 @@ public class Hra {
                 this.lenRaz = 1;
             }
         }
-        
+
         for (int zrychly = 0; zrychly <= this.zrychliTik; zrychly++) {
             this.getSmerOkolie();
             this.getDotknutaPrekazka();
-            
+
             switch (this.smer) {
                 case DOLE_VPRAVO:
                     this.gulicka.getPosunutaPoloha(Smer.DOLE_VPRAVO);
@@ -215,7 +209,7 @@ public class Hra {
                 case HORE_VPRAVO:
                     this.gulicka.getPosunutaPoloha(Smer.HORE_VPRAVO);
                     break;
-                case HORE_VLAVO:   
+                case HORE_VLAVO:
                     this.gulicka.getPosunutaPoloha(Smer.HORE_VLAVO);
                     break;
                 default:
@@ -223,7 +217,7 @@ public class Hra {
             }
         }
     }
-    
+
     /**
      * Metóda zabezpečuje ovládanie odrážadla pri stlačení šipky vpravo.
      * Podmienka zisťuje či sa odrážadlo nenachádza pri pravom okraji,
@@ -247,7 +241,7 @@ public class Hra {
         }
         this.sipka = Sipky.VLAVO;
     }
-    
+
     /**
      * Metóda zistí, kde sa nachádza hráčsky kurzor po kliknutí
      * a zisťuje, či sa dané súradnice nezhodujú so súradnicami tlačitiek.
@@ -262,15 +256,15 @@ public class Hra {
                 && y <= this.tlacidla.get(i).getBlokY() + this.tlacidla.get(i).getVyskaBloku()) {
                 if (i == 0) {
                     this.skryMeniaceCasti();
-                    this.level = LEVEL1;
+                    this.level = Level.LEVEL1;
                     this.vytvorPlochu();
                 } else if (i == 1) {
                     this.skryMeniaceCasti();
-                    this.level = LEVEL2;
+                    this.level = Level.LEVEL2;
                     this.vytvorPlochu();
                 } else if (i == 2) {
                     this.skryMeniaceCasti();
-                    this.level = LEVEL3;
+                    this.level = Level.LEVEL3;
                     this.vytvorPlochu();
                 } else {
                     System.exit(0);
@@ -278,7 +272,7 @@ public class Hra {
             }
         }
     }
-    
+
     /**
      * Pomocná metóda, ktorá vytvára novú plochu.
      */
@@ -293,7 +287,7 @@ public class Hra {
         this.sipka = Sipky.ZIADNA;
         this.lenRaz = 0;
     }
-    
+
     /**
      * Pomocná metóda skryje odrážadlo, guličku, prekážky a text.
      */
@@ -303,9 +297,9 @@ public class Hra {
         this.prekazky.skry();
         this.text.skry();
     }
-    
+
     /**
-     * Pomocná metóda, ktorá podľa farby bloku vykoná dané vylepšenie, 
+     * Pomocná metóda, ktorá podľa farby bloku vykoná dané vylepšenie,
      * skryje blok a pripočíta k atribútu skryté jednotku.
      * @param riadok načíta, v ktorom riadku sa prekážka nachádza.
      * @param stlpec načíta, v ktorom stĺpci sa prekážka nachádza.
